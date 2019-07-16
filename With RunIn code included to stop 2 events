@@ -126,12 +126,18 @@
 		sensorValueEvent(cmd.value)
 	}
 	
-
-	def zwaveEvent(hubitat.zwave.commands.basicv1.BasicSet cmd)
-	{
-		sensorValueEvent(cmd.value)
+	def zwaveEvent(hubitat.zwave.commands.basicv1.BasicSet cmd) {
+	log.debug "$cmd"
+	runIn(1, createWaterEvent, [data:[value:cmd.value ? "wet" : "dry"]])	
+	return []
 	}
-	
+
+	def createWaterEvent(data) {
+	log.info "water is ${data?.value}"
+	if (data?.value) {		
+		sendEvent(name:"water", value:data.value)
+	}
+	}
 
 	def zwaveEvent(hubitat.zwave.commands.switchbinaryv1.SwitchBinaryReport cmd)
 	{
