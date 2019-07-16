@@ -137,7 +137,6 @@
 	if (data?.value) {		
 		sendEvent(name:"water", value:data.value)
 	}
-	}
 
 	def zwaveEvent(hubitat.zwave.commands.switchbinaryv1.SwitchBinaryReport cmd)
 	{
